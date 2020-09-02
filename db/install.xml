@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="question/type/kekule_chem_multi/db" VERSION="2020090100" COMMENT="XMLDB file for Moodle question/type/kekule_chem_multi"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="qtype_kekule_ans_ops_multi" COMMENT="Options for Kekule Chem question answers">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="answerid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Foreign key references answer.id."/>
+        <FIELD NAME="arrows_transfo" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Type of arrow transformation"/>
+        <FIELD NAME="arrows_grade" TYPE="float" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="draw_grade" TYPE="float" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="next_to_arrow" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Complete the question transfo after the arrows"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="answerid" TYPE="foreign-unique" FIELDS="answerid" REFTABLE="question_answers" REFFIELDS="id"/>
+      </KEYS>
+    </TABLE>
+      
+  </TABLES>
+</XMLDB>

@@ -1,0 +1,69 @@
+
+.vodiapicker{
+  display: none !important; 
+}
+
+
+#a li{
+  list-style: none;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#a li:hover{
+ cursor:pointer;
+}
+
+/* item list */
+
+.b{
+  display: none;
+  width: 100%;
+  max-width: 100px;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  border: 1px solid rgba(0,0,0,.15);
+  position: relative;
+}
+
+.open{
+  display: show !important;
+}
+
+.btn-select{
+  margin-top: 10px;
+  max-width: 100px;
+  height: 34px;
+ /* border: 1px solid #ccc; */
+  padding-top: 5px;
+ 
+}
+.btn-select li{
+  list-style: none;
+  float: left;
+  padding-bottom: 0px;
+}
+
+.btn-select:hover li{
+  margin-left: 0px;
+}
+
+.btn-select:hover{
+  background-color: #F4F3F3;
+  border: 1px solid transparent;
+  box-shadow: inset 0 0px 0px 1px #ccc;
+  
+  
+}
+
+.btn-select:focus{
+   outline:none;
+}
+
+#a { 
+   margin-left: -16px;
+   position: relative;
+}
+
+#first_arrow {
+    margin-left: 2px;
+}

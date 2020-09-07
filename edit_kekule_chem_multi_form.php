@@ -24,6 +24,7 @@ class qtype_kekule_chem_multi_edit_form extends qtype_kekule_chem_base_edit_form
     protected function definition_inner($mform) {
         global $PAGE;
         $PAGE->requires->css('/question/type/kekule_chem_multi/selectimag.css');
+        $PAGE->requires->css('/question/type/kekule_chem_multi/nexttoarrow.css');
         parent::definition_inner($mform);
     }
     public function qtype() {

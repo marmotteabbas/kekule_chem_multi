@@ -123,6 +123,7 @@ class qtype_kekule_chem_multi_renderer extends qtype_kekule_chem_base_renderer {
     protected function getBlankHtml($blankIndex, $blank, $answer, $question,
                                     question_attempt $qa, question_display_options $options, $correctResponse)
     {
+        global $DB, $CFG;
         $inputType = intval($question->inputtype);
         $widgetType = 'viewer';
         $htmlWidgetClassName = qtype_kekule_chem_html::CLASS_MOL_BLANK;
@@ -181,6 +182,33 @@ class qtype_kekule_chem_multi_renderer extends qtype_kekule_chem_base_renderer {
         $result = html_writer::empty_tag("br");
           //editor 1
         $result .= html_writer::span('', '', $chemElemAttributes);
+        
+        //Middle question part
+        $middle_datas = array_shift(array_values($DB->get_records("qtype_kekule_ans_ops_multi",array("answerid" => array_shift(array_values($question->answers))->id))));
+        // Arrow
+        $result .= html_writer::start_tag('span', array("style" => "left:10px;position: relative;"));
+        $result .= html_writer::img($CFG->wwwroot."/question/type/kekule_chem_multi/img/".$middle_datas->arrows_transfo.".png");
+        $result .= html_writer::end_tag('span');
+//Symbols
+        $middle_datas = array_shift(array_values($DB->get_records("qtype_kekule_ans_ops_multi",array("answerid" => array_shift(array_values($question->answers))->id))));
+        $elemAttributesMiddleDatas = array(
+            'type' => 'hidden',
+            'name' => "middle_draw",
+            'data-name' => "middle_draw", 
+            'value' => $middle_datas->next_to_arrow,
+            'id' => "middle_draw",
+            'class' => qtype_kekule_chem_html::CLASS_BLANK,
+            'data-widget-class' => $htmlWidgetClassName,
+            'data-input-type' => $widgetInputType,
+            'data-preferWidget' => 'static',
+        );
+        
+            /*Dirty but worky */
+        $result .= html_writer::start_tag('input', $elemAttributesMiddleDatas);
+        $result .= html_writer::end_tag('input');
+        
+        $elemAttributesMiddleDatas['style'] = "border: none;background: none;";
+        $result .= html_writer::span('', '', $elemAttributesMiddleDatas);
         
         //editor 2
         $chemElemAttributes["data-name"] = substr($chemElemAttributes["data-name"],"0","-1")."1";

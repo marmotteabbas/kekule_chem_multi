@@ -59,6 +59,6 @@ class qtype_kekule_chem_multi extends qtype_kekule_chem_base {
     }
     
     public function extra_answer_fields() {
-        return array('qtype_kekule_ans_ops_multi','arrows_transfo','next_to_arrow','arrows_grade','draw_grade');
+        return array('qtype_kekule_ans_ops_multi', 'blankindex','arrows_transfo','next_to_arrow','arrows_grade','draw_grade');
     }
 }

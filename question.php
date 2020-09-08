@@ -28,14 +28,7 @@ class qtype_kekule_chem_multi_question extends qtype_kekule_chem_base_question {
      protected function _compareMolAnsString($src, $target, $compareMethod, $compareLevel) {
 
         $target = json_decode($target);
-        
-        $compare_one_target = $target[1];
-        
-        $srcDetail = (array)json_decode($src);
-        
-        $compare_one_src = $srcDetail[1];
-        $compare_one_src = json_encode($compare_one_src);
-        
+                       
         foreach ($target as $i => $t) {
             $target[$i] = json_decode($t);
         }
@@ -43,8 +36,13 @@ class qtype_kekule_chem_multi_question extends qtype_kekule_chem_base_question {
         $targetDetail = $target;
         $srcDetail = (array)json_decode($src);
         
- 
-        return parent::_compareMolAnsString($compare_one_src, $compare_one_target, 1, 2);
+        $compare_one_target = json_encode($targetDetail[0]);
+        $compare_one_src = json_encode($srcDetail[0]);
+        
+        $compare_two_target = json_encode($targetDetail[1]);
+        $compare_two_src = json_encode($srcDetail[1]);
+        
+        return parent::_compareMolAnsString($compare_one_src, $compare_one_target, 13, 2)/*+parent::_compareMolAnsString($compare_two_src, $compare_two_target, 1, 2)*/;
         //return qtype_kekule_chem_utils::compare_arrows($srcDetail[0], $targetDetail[0]);
      }
 

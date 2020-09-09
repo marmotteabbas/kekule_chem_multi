@@ -71,6 +71,8 @@ class qtype_kekule_chem_multi_renderer extends qtype_kekule_chem_base_renderer {
                         $a0 = json_decode($a[0]);
                         $a1 = json_decode($a[1]);
                         $a1->molData = "";
+                        $a1->smiles="";
+                        $a1->smilesNoStereo="";
                         $moldata = json_decode($a0->molData);
 
                         foreach ($moldata->root->children->items as $id=> $i) {
@@ -184,13 +186,20 @@ class qtype_kekule_chem_multi_renderer extends qtype_kekule_chem_base_renderer {
         $result .= html_writer::span('', '', $chemElemAttributes);
         
         //Middle question part
-        $middle_datas = array_shift(array_values($DB->get_records("qtype_kekule_ans_ops_multi",array("answerid" => array_shift(array_values($question->answers))->id))));
+        $qa = $question->answers;
+        $av = array_values($qa);
+        $array_qa = array_shift($av);
+        $ans_id = $array_qa->id;
+        $inter_ans = $DB->get_records("qtype_kekule_ans_ops_multi",array("answerid" => $ans_id));
+        $intav = array_values($inter_ans);
+        $middle_datas = array_shift($intav);
+        
         // Arrow
         $result .= html_writer::start_tag('span', array("style" => "left:10px;position: relative;"));
-        $result .= html_writer::img($CFG->wwwroot."/question/type/kekule_chem_multi/img/".$middle_datas->arrows_transfo.".png");
+        $result .= html_writer::img($CFG->wwwroot."/question/type/kekule_chem_multi/img/".$middle_datas->arrows_transfo.".png","arrows_transfo");
         $result .= html_writer::end_tag('span');
 //Symbols
-        $middle_datas = array_shift(array_values($DB->get_records("qtype_kekule_ans_ops_multi",array("answerid" => array_shift(array_values($question->answers))->id))));
+     //   $middle_datas = array_shift(array_values($DB->get_records("qtype_kekule_ans_ops_multi",array("answerid" => array_shift(array_values($question->answers))->id))));
         $elemAttributesMiddleDatas = array(
             'type' => 'hidden',
             'name' => "middle_draw",

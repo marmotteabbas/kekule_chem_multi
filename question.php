@@ -55,5 +55,71 @@ class qtype_kekule_chem_multi_question extends qtype_kekule_chem_base_question {
 
         return ($arrows_grade*$qkaom->arrows_grade)+($draw_grade*$qkaom->draw_grade);
      }
+     
+    protected function gradeResponseOfGroup($blankGroup, $responses) {
+        $responseCount = count($responses);
+        // build a score matrix of keyGroups * responses
+        $scoreMatrix = array();
+        foreach ($blankGroup as $i => $keyIndex)
+        {
+            $scoreMatrix[$keyIndex] = array();
+            $keys = $this->answerKeyMap[$keyIndex];
+            foreach($responses as $resIndex => $response)
+            {
+                list($matchKey, $matchRatio, $matchRatioFraction) = $this->getMatchKeyOfResponse($response, $keys);
+                $cell = new stdClass;
+                $cell->matchKey = $matchKey;
+                $cell->matchRatio = $matchRatio;
+                $cell->matchRatioFraction = $matchRatioFraction;
+                $scoreMatrix[$keyIndex][$resIndex] = $cell;
+            }
+        }
+        //var_dump($scoreMatrix);
+        // find highest match ratio element from matrix, then delete the corresponding row and col
+        // do the same job on the remaining matrix, gradually got all results
 
+        while (!empty($scoreMatrix))
+        {
+            list($keyIndex, $resIndex, $maxCell) = $this->_extractMaxRatioCell($scoreMatrix);
+            // save result to corresponding blank
+            $blankIndex = $blankGroup[$resIndex];
+            $blank = $this->blanks[$blankIndex];
+            //var_dump($blank);
+            $blank->matchAnswerKey = $maxCell->matchKey;
+            $blank->matchRatio = $maxCell->matchRatio;
+            if (isset($blank->matchAnswerKey))
+                $blank->fraction = $blank->matchAnswerKey->fraction * $maxCell->matchRatio;
+            else
+                $blank->fraction = 0;
+            $blank->score = $this->getBlankDefaultMark($keyIndex) * $blank->fraction;
+            //var_dump($blank);
+        }
+    }
+    
+    private function _extractMaxRatioCell(&$scoreMatrix) {
+        $maxRatioFraction = -1;
+        $rowIndex = -1;
+        $colIndex = -1;
+        $maxCell = null;
+        foreach($scoreMatrix as $keyIndex => $keyRow)
+        {
+            foreach($keyRow as $resIndex => $cell)
+            {
+                if ($cell->matchRatioFraction > $maxRatioFraction)
+                {
+                    $maxCell = $cell;
+                    $maxRatioFraction = $cell->matchRatioFraction;
+                    $rowIndex = $keyIndex;
+                    $colIndex = $resIndex;
+                }
+            }
+        }
+        // remove max row and col
+        unset($scoreMatrix[$rowIndex]);
+        foreach ($scoreMatrix as $keyIndex => $keyRow)
+        {
+            unset($scoreMatrix[$keyIndex][$colIndex]);
+        }
+        return array($rowIndex, $colIndex, $maxCell);
+    }
 }

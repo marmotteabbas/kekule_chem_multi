@@ -242,5 +242,48 @@ class qtype_kekule_chem_multi_renderer extends qtype_kekule_chem_base_renderer {
         */
         return $result;
     }
+    
+        protected function correctResponseTextToHtml(question_attempt $qa, $question, $text)
+    {
+        global $DB, $CFG;
+            
+        $anstotal = json_decode($text);
+
+        $ansDetail1 = $question->parseAnswerString($anstotal[0]);
+        $ansDetail2 = $question->parseAnswerString($anstotal[1]);
+        // create auto launch viewer widget
+        $attr = array(
+            'data-widget' => 'Kekule.ChemWidget.Viewer',
+            'data-auto-size' => 'true',
+            'data-predefined-setting' => 'static'
+        );
+        
+        $html = "";
+        
+        if (!empty($ansDetail1->molData)) {
+            $attr['data-chem-obj'] = $ansDetail1->molData;
+            $html .= html_writer::span('', qtype_kekule_chem_html::CLASS_CORRECT_RESPONSE, $attr);
+        }
+        
+        $ak = array_keys($question->answers);
+        $id_key_first_question = array_shift($ak);
+        $ansdata = $DB->get_record("qtype_kekule_ans_ops_multi", array("answerid" => $id_key_first_question));
+        $next_to_arrow = $ansdata->next_to_arrow;
+        $arrow = $ansdata->arrows_transfo;
+        
+        $html .= html_writer::img($CFG->wwwroot."/question/type/kekule_chem_multi/img/".$arrow.".png","arrows_transfo");
+       // var_dump(json_decode($next_to_arrow)->molData);die();
+        if (!empty(json_decode($next_to_arrow)->molData)) {
+            $attr['data-chem-obj'] = json_decode($next_to_arrow)->molData;
+            $html .= html_writer::span('', qtype_kekule_chem_html::CLASS_CORRECT_RESPONSE, $attr);
+        }
+        
+        if (!empty($ansDetail2->molData)) {
+            $attr['data-chem-obj'] = $ansDetail2->molData;
+            $html .= html_writer::span('', qtype_kekule_chem_html::CLASS_CORRECT_RESPONSE, $attr);
+        }
+        
+        return $html;
+    }
 
 }

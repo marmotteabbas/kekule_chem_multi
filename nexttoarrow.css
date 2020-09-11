@@ -1,3 +1,19 @@
 .form-group .K-Widget.K-Chem-Viewer.K-Chem-Viewer2D.K-NonSelectable.K-Layout-H.K-Chem-Question-Design-BlankViewer.K-State-Normal:nth-child(8) {
     background-color: lightgrey;
 }
+
+#id_answerhdr .fcontainer .fitem:nth-of-type(1) .felement .arrow_selector {
+    opacity:1 !important;
+}
+
+#id_answerhdr .fcontainer .fitem:nth-of-type(1) .felement .K-Chem-Viewer2D:nth-of-type(2){
+    opacity:1 !important;
+}
+
+#id_answerhdr .fcontainer .fitem .felement .arrow_selector {
+    opacity:0;
+}
+
+#id_answerhdr .fcontainer .fitem .felement .K-Chem-Viewer2D:nth-of-type(2){
+    opacity:0;
+}

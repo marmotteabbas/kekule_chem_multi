@@ -93,22 +93,22 @@ class qtype_kekule_chem_multi_edit_form extends qtype_kekule_chem_base_edit_form
         $result[] = $mform->createElement('select', 'arrows_grade',
             "Arrows Grade",
             array(
-                "0.0" => "0%",
+                "0" => "0%",
                 "0.25" => "25%",
                 "0.5" => "50%",
                 "0.75" => "75%",
-                "1.0" => "100%"
+                "1" => "100%"
                 )
         );      
         
         $result[] = $mform->createElement('select', 'draw_grade',
             "Draw Grade",
             array(
-                "0.0" => "0%",
+                "0" => "0%",
                 "0.25" => "25%",
                 "0.5" => "50%",
                 "0.75" => "75%",
-                "1.0" => "100%"
+                "1" => "100%"
                 )
         );
         
@@ -145,7 +145,7 @@ class qtype_kekule_chem_multi_edit_form extends qtype_kekule_chem_base_edit_form
         );
         */
         $PAGE->requires->js_call_amd("qtype_kekule_chem_multi/selectimag", "init");
-
+        $PAGE->requires->js_call_amd("qtype_kekule_chem_multi/grade_adaptation", "init");
         return $result;
 
     }

@@ -193,11 +193,14 @@ class qtype_kekule_chem_multi_renderer extends qtype_kekule_chem_base_renderer {
         $inter_ans = $DB->get_records("qtype_kekule_ans_ops_multi",array("answerid" => $ans_id));
         $intav = array_values($inter_ans);
         $middle_datas = array_shift($intav);
-        
+
         // Arrow
-        
-        if (sizeof(json_decode(json_decode($middle_datas->next_to_arrow)->molData)->root->children->items) > 0) {
-            $style = "left:10px;position: relative;";
+        if ($middle_datas->next_to_arrow != '') {
+            if (sizeof(json_decode(json_decode($middle_datas->next_to_arrow)->molData)->root->children->items) > 0) {
+                $style = "left:10px;position: relative;";
+            } else {
+                $style = "margin-right: 21px;left:10px;position: relative;";
+            }
         } else {
             $style = "margin-right: 21px;left:10px;position: relative;";
         }
@@ -220,12 +223,14 @@ class qtype_kekule_chem_multi_renderer extends qtype_kekule_chem_base_renderer {
         );
         
             /*Dirty but worky */
-        if (sizeof(json_decode(json_decode($middle_datas->next_to_arrow)->molData)->root->children->items) > 0) {
-            $result .= html_writer::start_tag('input', $elemAttributesMiddleDatas);
-            $result .= html_writer::end_tag('input');
+        if ($middle_datas->next_to_arrow != '') {
+            if (sizeof(json_decode(json_decode($middle_datas->next_to_arrow)->molData)->root->children->items) > 0) {
+                $result .= html_writer::start_tag('input', $elemAttributesMiddleDatas);
+                $result .= html_writer::end_tag('input');
 
-            $elemAttributesMiddleDatas['style'] = "border: none;background: none;";
-            $result .= html_writer::span('', '', $elemAttributesMiddleDatas);
+                $elemAttributesMiddleDatas['style'] = "border: none;background: none;";
+                $result .= html_writer::span('', '', $elemAttributesMiddleDatas);
+            }
         }
         //editor 2
         $chemElemAttributes["data-name"] = substr($chemElemAttributes["data-name"],"0","-1")."1";
@@ -281,9 +286,11 @@ class qtype_kekule_chem_multi_renderer extends qtype_kekule_chem_base_renderer {
         
         $html .= html_writer::img($CFG->wwwroot."/question/type/kekule_chem_multi/img/".$arrow.".png","arrows_transfo");
        // var_dump(json_decode($next_to_arrow)->molData);die();
-        if (sizeof(json_decode(json_decode($next_to_arrow)->molData)->root->children->items) > 0) {
-            $attr['data-chem-obj'] = json_decode($next_to_arrow)->molData;
-            $html .= html_writer::span('', qtype_kekule_chem_html::CLASS_CORRECT_RESPONSE, $attr);
+        if ($next_to_arrow != '') {
+            if (sizeof(json_decode(json_decode($next_to_arrow)->molData)->root->children->items) > 0) {
+                $attr['data-chem-obj'] = json_decode($next_to_arrow)->molData;
+                $html .= html_writer::span('', qtype_kekule_chem_html::CLASS_CORRECT_RESPONSE, $attr);
+            }
         }
         
         if (!empty($ansDetail2->molData)) {

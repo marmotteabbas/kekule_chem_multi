@@ -27,10 +27,10 @@ require_once($CFG->dirroot . '/question/type/kekule_chem_base/lib.php');
 class qtype_kekule_chem_multi_question extends qtype_kekule_chem_base_question {
     
     protected function calcMatchingRatio($responseItem, $key) {
-        return $this->_compareMolAnsString($responseItem, $key->answer, $this->getAnsCompareMethod($key), $this->getAnsCompareLevel($key),$key->id);
+        return $this->_compareMolAnsStringMulti($responseItem, $key->answer, $this->getAnsCompareMethod($key), $this->getAnsCompareLevel($key),$key->id);
     }
     
-     protected function _compareMolAnsString($src, $target, $compareMethod, $compareLevel,$key_id) {
+     protected function _compareMolAnsStringMulti($src, $target, $compareMethod, $compareLevel,$key_id) {
         global $DB;
         $target = json_decode($target);
                        
@@ -50,7 +50,7 @@ class qtype_kekule_chem_multi_question extends qtype_kekule_chem_base_question {
         $qkaom = $DB->get_record("qtype_kekule_ans_ops_multi", array("answerid"=>$key_id));
         
         $arrows_grade = floatval(parent::_compareMolAnsString($compare_one_src, $compare_one_target, 13, 2));
-        $draw_grade = floatval(parent::_compareMolAnsString($compare_two_src, $compare_two_target, 1, 2));
+        $draw_grade = floatval(parent::_compareMolAnsString($compare_two_src, $compare_two_target, 1, $compareLevel));
         
 
         return ($arrows_grade*$qkaom->arrows_grade)+($draw_grade*$qkaom->draw_grade);

@@ -112,9 +112,9 @@ class qtype_kekule_chem_multi_edit_form extends qtype_kekule_chem_base_edit_form
                 )
         );
         
-        /*
+        
         $result[] = $mform->createElement('select', 'comparelevel',
-            get_string('captionCompareLevel', 'qtype_kekule_chem_base'),
+            "Comp Level Draw",
             array(
                 qtype_kekule_chem_compare_levels::DEF_LEVEL => get_string('molCompareLevelDefault', 'qtype_kekule_chem_base'),
                 qtype_kekule_chem_compare_levels::CONSTITUTION => get_string('molCompareLevelConstitution', 'qtype_kekule_chem_base'),
@@ -122,7 +122,7 @@ class qtype_kekule_chem_multi_edit_form extends qtype_kekule_chem_base_edit_form
                 qtype_kekule_chem_compare_levels::NON_BONDING_PAIRS => get_string('molCompareLevelElectronMatters', 'qtype_kekule_chem_base')
                 )
         );
-
+        /*
         $result[] = $mform->createElement('select', 'comparemethod',
             get_string('captionCompareMethod', 'qtype_kekule_chem_base'),
             array(

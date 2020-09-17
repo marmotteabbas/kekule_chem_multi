@@ -45,9 +45,10 @@ class qtype_kekule_chem_multi_renderer extends qtype_kekule_chem_base_renderer {
         if ($options->correctness) {  // need to score the whole question first
             $question->grade_response($response);
             $correctResponse = $question->get_correct_response();
-        }
-        else
+        } else {
+            $PAGE->requires->js_call_amd("qtype_kekule_chem_multi/button_editor_manager", "init");
             $correctResponse = null;
+        }
 
         $result = '';
         $blankIndex = 0;

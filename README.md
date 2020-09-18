@@ -1,5 +1,3 @@
 # kekule_chem_multi
-A moodle quizz question. Ask to draw a molecule on a kekule.js editor. 
-Compare with the answer draw by the teacher to give the deserved note at each questions.
-
-Unique feature : Compare the electrons charges for each atoms.
+A moodle quizz question. That containes two kekule drawing zone in an unique question.
+The student have to put in the first one the good transformation arrows and have to draw the good mollecule in the second one.

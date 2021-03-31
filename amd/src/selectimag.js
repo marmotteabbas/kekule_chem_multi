@@ -20,7 +20,7 @@ define(['jquery'], function($) {
 
             //change button stuff on click
             $('#a li').click(function () {
-              var indice = $(this).parent().parent().parent().parent().parent().attr("data-groupname").replace("answeroptions[", "").substring(0,1);
+              var indice = $(this).closest('.form-group').attr("data-groupname").replace("answeroptions[", "").substring(0,1);
               var img = $(this).find('img').attr("src");
               var value = $(this).find('img').attr('value');
               var text = this.innerText;
